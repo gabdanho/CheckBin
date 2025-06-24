@@ -5,6 +5,18 @@ import okio.IOException
 import retrofit2.HttpException
 import java.net.SocketTimeoutException
 
+/**
+ * Обертка для безопасного выполнения API-запросов с обработкой ошибок.
+ *
+ * @param apiCall Запрос к API
+ * @return Result с данными или ошибкой
+ *
+ * Обрабатывает:
+ * - HttpException
+ * - SocketTimeoutException
+ * - IOException
+ * - Exception
+ */
 suspend fun <T> safeApiCall(apiCall: suspend () -> T): Result<T> {
     return try {
         Result.Success(apiCall())

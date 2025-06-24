@@ -6,7 +6,14 @@ import com.example.checkbin.data.remote.model.BinDataRequest
 import com.example.checkbin.data.remote.model.CountryRequest
 import com.example.checkbin.data.remote.model.NumberInfoRequest
 
+/**
+ * Предоставляет функции конвертации данных в формат для хранения в базе данных (BinDataHistoryEntity).
+ */
 object BinDataHistoryEntityMapper {
+    /**
+     * @receiver Исходный объект [BinDataRequest]
+     * @return Новый экземпляр [BinDataHistoryEntity]
+     */
     fun BinDataRequest.toBinDataHistoryEntity(): BinDataHistoryEntity {
         return BinDataHistoryEntity(
             number = NumberInfoRequest(

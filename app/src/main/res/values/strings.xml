@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">CheckBin</string>
+
+    <string name="text_scheme">SCHEME</string>
+    <string name="text_prepaid">PREPAID</string>
+    <string name="text_brand">BRAND</string>
+    <string name="text_country">COUNTRY</string>
+    <string name="text_card_number">CARD NUMBER</string>
+    <string name="text_length_luhn">LENGTH: %1$s; LUHN: %2$s</string>
+    <string name="text_type">TYPE</string>
+    <string name="text_bank">BANK</string>
+    <string name="text_bank_city">Bank: %1$s, city: %2$s</string>
+    <string name="text_url">URL: %1$s</string>
+    <string name="text_phone">Phone: %1$s</string>
+    <string name="text_emoji_and_country">%1$s %2$s</string>
+    <string name="text_input_bin">Input BIN</string>
+    <string name="text_history_not_exists">History not exists</string>
+
+    <string name="button_check_bin">Check BIN</string>
+
+    <string name="content_history">History</string>
+    <string name="content_go_back">Go back</string>
 </resources>

@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.dagger.hilt)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.google.devtools.ksp)
     alias(libs.plugins.compose.compiler)
 }
 
@@ -66,9 +66,11 @@ dependencies {
     implementation(libs.retrofit)
     // GSON Converter
     implementation(libs.converter.gson)
-    // Dagger Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
+    // Hilt
+    implementation(libs.google.dagger.hilt.android)
+    implementation(libs.google.dagger.hilt.navigation.compose)
+    ksp(libs.google.dagger.hilt.android.compiler)
+
     // Lifecycle ViewModel Compose
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Logging Interceptor

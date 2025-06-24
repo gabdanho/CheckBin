@@ -1,8 +1,5 @@
-package com.example.checkbin
+package com.example.checkbin.presentation
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -25,27 +22,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             CheckBinTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize().statusBarsPadding(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .statusBarsPadding(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    BinNavGraph(navController = rememberNavController(), context = this)
+                    BinNavGraph(navController = rememberNavController())
                 }
             }
         }
     }
-}
-
-fun openPhone(context: Context, number: String) {
-    val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel: $number"))
-    context.startActivity(intent)
-}
-
-fun openMap(context: Context, latitude: Int , longitude: Int) {
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:$latitude,$longitude"))
-    context.startActivity(intent)
-}
-
-fun openBrowser(context: Context, link: String) {
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
-    context.startActivity(intent)
 }

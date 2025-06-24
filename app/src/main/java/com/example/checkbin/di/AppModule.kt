@@ -17,15 +17,20 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 const val BASE_URL = "https://lookup.binlist.net"
 
+/**
+ * Dependency Injection
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object Module {
 
     // Binlist server start
 
+    @Singleton
     @Provides
     fun provideOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor
@@ -35,6 +40,7 @@ object Module {
             .build()
     }
 
+    @Singleton
     @Provides
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
@@ -42,6 +48,7 @@ object Module {
         }
     }
 
+    @Singleton
     @Provides
     fun provideRetrofit(
         okHttpClient: OkHttpClient
@@ -55,21 +62,25 @@ object Module {
 
     // Binlist server end
 
+    @Singleton
     @Provides
     fun provideBinDataApi(retrofit: Retrofit): BinDataApi {
         return retrofit.create(BinDataApi::class.java)
     }
 
+    @Singleton
     @Provides
     fun provideBinDataDatabase(@ApplicationContext context: Context): BinDataHistoryDatabase {
         return BinDataHistoryDatabase.getDatabase(context)
     }
 
+    @Singleton
     @Provides
     fun provideBinDataHistoryDao(dataDatabase: BinDataHistoryDatabase): BinDataHistoryDao {
         return dataDatabase.binDataDao()
     }
 
+    @Singleton
     @Provides
     fun provideBinDataRepository(
         binDataApi: BinDataApi
@@ -77,6 +88,7 @@ object Module {
         return BinDataRepositoryImpl(binDataApi = binDataApi)
     }
 
+    @Singleton
     @Provides
     fun provideBinDataHistoryRepository(binDataHistoryDao: BinDataHistoryDao): BinDataHistoryRepository {
         return BinDataHistoryRepositoryImpl(binDataHistoryDao)
