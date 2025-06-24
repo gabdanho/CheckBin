@@ -1,9 +1,13 @@
 package com.example.checkbin.di
 
 import android.content.Context
-import com.example.checkbin.data.local.BinDataDao
-import com.example.checkbin.data.local.BinDataDatabase
-import com.example.checkbin.data.remote.BinlistApi
+import com.example.checkbin.data.local.dao.BinDataHistoryDao
+import com.example.checkbin.data.local.database.BinDataHistoryDatabase
+import com.example.checkbin.data.remote.api.BinDataApi
+import com.example.checkbin.data.repository.BinDataHistoryRepositoryImpl
+import com.example.checkbin.data.repository.BinDataRepositoryImpl
+import com.example.checkbin.domain.interfaces.repository.BinDataHistoryRepository
+import com.example.checkbin.domain.interfaces.repository.BinDataRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,16 +24,28 @@ const val BASE_URL = "https://lookup.binlist.net"
 @InstallIn(SingletonComponent::class)
 object Module {
 
-    @Provides
-    fun provideRetrofit(): Retrofit {
-        val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
+    // Binlist server start
 
-        val okHttpClient = OkHttpClient.Builder()
+    @Provides
+    fun provideOkHttpClient(
+        loggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .build()
+    }
 
+    @Provides
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+    }
+
+    @Provides
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient
+    ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -37,18 +53,32 @@ object Module {
             .build()
     }
 
+    // Binlist server end
+
     @Provides
-    fun provideBinlistApi(retrofit: Retrofit): BinlistApi {
-        return retrofit.create(BinlistApi::class.java)
+    fun provideBinDataApi(retrofit: Retrofit): BinDataApi {
+        return retrofit.create(BinDataApi::class.java)
     }
 
     @Provides
-    fun provideBinDataDatabase(@ApplicationContext context: Context): BinDataDatabase {
-        return BinDataDatabase.getDatabase(context)
+    fun provideBinDataDatabase(@ApplicationContext context: Context): BinDataHistoryDatabase {
+        return BinDataHistoryDatabase.getDatabase(context)
     }
 
     @Provides
-    fun provideBinDataDao(dataDatabase: BinDataDatabase): BinDataDao {
+    fun provideBinDataHistoryDao(dataDatabase: BinDataHistoryDatabase): BinDataHistoryDao {
         return dataDatabase.binDataDao()
+    }
+
+    @Provides
+    fun provideBinDataRepository(
+        binDataApi: BinDataApi
+    ): BinDataRepository {
+        return BinDataRepositoryImpl(binDataApi = binDataApi)
+    }
+
+    @Provides
+    fun provideBinDataHistoryRepository(binDataHistoryDao: BinDataHistoryDao): BinDataHistoryRepository {
+        return BinDataHistoryRepositoryImpl(binDataHistoryDao)
     }
 }
