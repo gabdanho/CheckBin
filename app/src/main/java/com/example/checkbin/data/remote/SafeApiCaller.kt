@@ -22,14 +22,14 @@ suspend fun <T> safeApiCall(apiCall: suspend () -> T): Result<T> {
         Result.Success(apiCall())
     } catch (e: HttpException) {
         Result.ServerError(
-            message = "fun safeApiCall ServerError: $e",
+            message = e.toString(),
             errorCode = e.code()
         )
     } catch (e: SocketTimeoutException) {
-        Result.TimeoutError(message = "fun safeApiCall TimeoutError: $e")
+        Result.TimeoutError(message = e.toString())
     } catch (e: IOException) {
-        Result.ConnectionError(message = "fun safeApiCall ConnectionError: $e")
+        Result.ConnectionError(message = e.toString())
     } catch (e: Exception) {
-        Result.UnknownError(message = "fun safeApiCall UnknownError: $e")
+        Result.UnknownError(message = e.toString())
     }
 }

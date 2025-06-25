@@ -8,6 +8,6 @@ package com.example.checkbin.presentation.model
  * @property luhn Результат проверки номера по алгоритму Луна
  */
 data class NumberInfo(
-    val length: String = "",
-    val luhn: String = ""
+    val length: String? = "",
+    val luhn: Boolean? = null
 )

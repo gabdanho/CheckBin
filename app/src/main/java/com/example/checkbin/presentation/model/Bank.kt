@@ -9,9 +9,9 @@ package com.example.checkbin.presentation.model
  * @property city Город расположения банка-эмитента
  */
 data class Bank(
-    val name: String = "",
-    val url: String = "",
-    val phone: String = "",
-    val city: String = ""
+    val name: String? = "",
+    val url: String? = "",
+    val phone: String? = "",
+    val city: String? = ""
 )
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
+import com.example.checkbin.R
 
 /**
  * Утилиты для упрощённого создания и запуска интентов из контекста.
@@ -52,7 +53,7 @@ object IntentUtils {
         } else {
             Toast.makeText(
                 this,
-                "There is no suitable application to perform the action.",
+                getString(R.string.text_no_application_to_open_the_action),
                 Toast.LENGTH_LONG
             ).show()
         }

@@ -15,6 +15,10 @@
     <string name="text_emoji_and_country">%1$s %2$s</string>
     <string name="text_input_bin">Input BIN</string>
     <string name="text_history_not_exists">History not exists</string>
+    <string name="text_no_application_to_open_the_action">There is no suitable application to perform the action.</string>
+    <string name="text_yes">Yes</string>
+    <string name="text_no">No</string>
+    <string name="text_nothing">Nothing</string>
 
     <string name="button_check_bin">Check BIN</string>
 

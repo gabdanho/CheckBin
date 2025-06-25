@@ -79,23 +79,31 @@ fun CheckBinScreen(
         }
         uiState.loadingState.let { loadingState ->
             when (loadingState) {
-                is LoadingState.Success -> { /* TODO : Показать BinInfoCard */
+                is LoadingState.Success -> {
                     uiState.binData?.let { binData ->
                         BinDataCard(
                             binData = uiState.binData,
-                            onPhoneClick = { context.openPhone(number = binData.bank.phone) },
-                            onCityClick = {
-                                context.openMap(
-                                    latitude = binData.country.latitude.toInt(),
-                                    longitude = binData.country.longitude.toInt()
-                                )
+                            onPhoneClick = {
+                                binData.bank.phone?.let { context.openPhone(number = it) }
                             },
-                            onSiteClick = { context.openBrowser(link = binData.bank.url) }
+                            onCityClick = {
+                                if (binData.country.latitude != null && binData.country.longitude != null) {
+                                    context.openMap(
+                                        latitude = binData.country.latitude.toInt(),
+                                        longitude = binData.country.longitude.toInt()
+                                    )
+                                }
+                            },
+                            onSiteClick = {
+                                binData.bank.url?.let { context.openBrowser(link = it) }
+                            }
                         )
                     }
                 }
 
-                is LoadingState.Loading -> { LoadingCircle() }
+                is LoadingState.Loading -> {
+                    LoadingCircle()
+                }
 
                 is LoadingState.Error -> {
                     Toast.makeText(context, loadingState.message, Toast.LENGTH_LONG).show()

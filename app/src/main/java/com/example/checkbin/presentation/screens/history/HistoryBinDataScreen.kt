@@ -57,14 +57,18 @@ fun HistoryBinInfo(
                     items(binHistory) { binData ->
                         BinDataCard(
                             binData = binData,
-                            onPhoneClick = { context.openPhone(number = binData.bank.phone) },
+                            onPhoneClick = { binData.bank.phone?.let { context.openPhone(number = it) } },
                             onCityClick = {
-                                context.openMap(
-                                    latitude = binData.country.latitude.toInt(),
-                                    longitude = binData.country.longitude.toInt()
-                                )
+                                if (binData.country.latitude != null && binData.country.longitude != null) {
+                                    context.openMap(
+                                        latitude = binData.country.latitude.toInt(),
+                                        longitude = binData.country.longitude.toInt()
+                                    )
+                                }
                             },
-                            onSiteClick = { context.openBrowser(link = binData.bank.url) }
+                            onSiteClick = {
+                                binData.bank.url?.let { context.openBrowser(link = it) }
+                            }
                         )
                     }
                 }
