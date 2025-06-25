@@ -27,7 +27,6 @@ class HistoryBinDataScreenViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(HistoryBinDataScreenUiState())
     val uiState: StateFlow<HistoryBinDataScreenUiState> = _uiState.asStateFlow()
 
-
     init {
         getHistoryInfo()
     }
