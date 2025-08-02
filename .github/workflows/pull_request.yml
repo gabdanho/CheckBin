@@ -9,7 +9,7 @@ jobs: # сама работа
     runs-on: ubuntu-latest # запускать задачи на последней версии убунту
 
     steps: # шаги (задачи)
-      - uses: actions/checkout@v4 # действие для проверки кода
+      - uses: actions/checkout@v4 # действие для дальнейшей проверки кода
 
       - name: Setup JDK 17 # настройка JDK
         uses: actions/setup-java@v4
