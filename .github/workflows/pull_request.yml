@@ -1,0 +1,25 @@
+name: Run test
+
+on: # будет работать при...
+  pull_request: # ...пулл-реквестах...
+    branches: [main] # ...на ветке main
+
+jobs: # сама работа
+  build: # сборка
+    runs-on: ubuntu-latest # запускать задачи на последней версии убунту
+
+    steps: # шаги (задачи)
+      - uses: actions/checkout@v4 # действие для проверки кода
+
+      - name: Setup JDK 17 # настройка JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+          cache: 'gradle'
+
+      - name: Grant execute permissions for gradlew # разрешения для gradlew
+        run: chmod +x gradlew
+
+      - name: Run unit tests # запуск юнит тестов
+        run: ./gradlew clean testDebug
