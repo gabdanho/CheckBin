@@ -15,5 +15,6 @@ data class CheckBinScreenUiState(
     val errorMessage: String? = null,
     val binData: BinData? = null,
     val binInput: String = "",
+    val isButtonEnabled: Boolean = false,
     val loadingState: LoadingState? = null
 )

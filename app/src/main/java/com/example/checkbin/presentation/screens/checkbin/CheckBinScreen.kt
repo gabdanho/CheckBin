@@ -22,7 +22,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.checkbin.R
-import com.example.checkbin.presentation.BIN_LENGTH
 import com.example.checkbin.presentation.components.BinDataCard
 import com.example.checkbin.presentation.components.LoadingCircle
 import com.example.checkbin.presentation.model.LoadingState
@@ -74,13 +73,8 @@ fun CheckBinScreen(
             )
         }
         Button(
-            onClick = {
-                if (uiState.binInput.length == BIN_LENGTH) viewModel.getBinInfo() else Toast.makeText(
-                    context,
-                    context.getString(R.string.text_bin_error),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
+            onClick = { viewModel.getBinInfo() },
+            enabled = uiState.isButtonEnabled
         ) {
             Text(text = stringResource(id = R.string.button_check_bin))
         }

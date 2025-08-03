@@ -97,7 +97,12 @@ class CheckBinScreenViewModel @Inject constructor(
      */
     fun updateBin(value: String) {
         if (value.isDigitsOnly() && value.length <= BIN_LENGTH) {
-            _uiState.update { it.copy(binInput = value) }
+            _uiState.update {
+                it.copy(
+                    binInput = value,
+                    isButtonEnabled = value.length == BIN_LENGTH
+                )
+            }
         }
     }
 
