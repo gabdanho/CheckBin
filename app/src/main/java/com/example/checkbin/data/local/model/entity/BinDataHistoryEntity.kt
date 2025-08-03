@@ -3,9 +3,6 @@ package com.example.checkbin.data.local.model.entity
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.checkbin.data.remote.model.BankRequest
-import com.example.checkbin.data.remote.model.CountryRequest
-import com.example.checkbin.data.remote.model.NumberInfoRequest
 
 /**
  * Сущность для хранения истории запросов BIN-кодов в базе данных Room.
@@ -24,15 +21,15 @@ data class BinDataHistoryEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @Embedded
-    val number: NumberInfoRequest? = NumberInfoRequest(),
+    val number: NumberInfoEntity? = NumberInfoEntity(),
     val scheme: String? = "",
     val type: String? = "",
     val brand: String? = "",
     val prepaid: Boolean? = false,
     @Embedded(prefix = PREFIX_COUNTRY)
-    val country: CountryRequest? = CountryRequest(),
+    val country: CountryEntity? = CountryEntity(),
     @Embedded(prefix = PREFIX_BANK)
-    val bank: BankRequest? = BankRequest()
+    val bank: BankEntity? = BankEntity()
 ) {
     companion object {
         /**
@@ -51,3 +48,52 @@ data class BinDataHistoryEntity(
         const val PREFIX_BANK = "bank_"
     }
 }
+
+/**
+ * Модель данных с информацией о банке-эмитенте карты.
+ *
+ * @property name Название банка
+ * @property url Веб-сайт банка (URL)
+ * @property phone Контактный телефон банка
+ * @property city Город расположения банка-эмитента
+ */
+data class BankEntity(
+    val name: String? = null,
+    val url: String? = null,
+    val phone: String? = null,
+    val city: String? = null
+)
+
+/**
+ * Модель данных страны банка-эмитента карты.
+ * Содержит географическую и административную информацию о стране.
+ *
+ * @property numeric Цифровой код страны
+ * @property alpha2 Двухбуквенный код страны
+ * @property name Официальное название страны
+ * @property emoji Эмоджи флага страны
+ * @property currency Код валюты страны
+ * @property latitude Географическая широта столицы
+ * @property longitude Географическая долгота столицы
+ */
+data class CountryEntity(
+    val numeric: String? = null,
+    val alpha2: String? = null,
+    val name: String? = null,
+    val emoji: String? = null,
+    val currency: String? = null,
+    val latitude: Int? = null,
+    val longitude: Int? = null
+)
+
+/**
+ * Модель данных с информацией о номере банковской карты.
+ * Содержит технические характеристики номера карты.
+ *
+ * @property length Длина номера карты (количество цифр)
+ * @property luhn Результат проверки номера по алгоритму Луна
+ */
+data class NumberInfoEntity(
+    val length: Int? = null,
+    val luhn: Boolean? = null
+)

@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.checkbin.R
 import com.example.checkbin.presentation.components.BinDataCard
+import com.example.checkbin.presentation.model.LoadingState
 import com.example.checkbin.presentation.theme.defaultDimensions
 import com.example.checkbin.presentation.utils.IntentUtils.openBrowser
 import com.example.checkbin.presentation.utils.IntentUtils.openMap
@@ -47,41 +48,46 @@ fun HistoryBinInfo(
     Scaffold(
         topBar = { TopBar(onBackClick = onBackClick) }
     ) { innerPadding ->
-        uiState.binHistory?.let { binHistory ->
-            if (binHistory.isNotEmpty()) {
-                LazyColumn(
-                    modifier = modifier
-                        .padding(innerPadding)
-                        .padding(defaultDimensions.small)
-                ) {
-                    items(binHistory) { binData ->
-                        BinDataCard(
-                            binData = binData,
-                            onPhoneClick = { binData.bank.phone?.let { context.openPhone(number = it) } },
-                            onCityClick = {
-                                if (binData.country.latitude != null && binData.country.longitude != null) {
-                                    context.openMap(
-                                        latitude = binData.country.latitude.toInt(),
-                                        longitude = binData.country.longitude.toInt()
-                                    )
-                                }
-                            },
-                            onSiteClick = {
-                                binData.bank.url?.let { context.openBrowser(link = it) }
+        uiState.loadingState?.let { loadingState ->
+            when (loadingState) {
+                is LoadingState.Success -> {
+                    if (uiState.binHistory.isNotEmpty()) {
+                        LazyColumn(
+                            modifier = modifier
+                                .padding(innerPadding)
+                                .padding(defaultDimensions.small)
+                        ) {
+                            items(uiState.binHistory) { binData ->
+                                BinDataCard(
+                                    binData = binData,
+                                    onPhoneClick = { binData.bank.phone?.let { context.openPhone(number = it) } },
+                                    onCityClick = {
+                                        if (binData.country.latitude != null && binData.country.longitude != null) {
+                                            context.openMap(
+                                                latitude = binData.country.latitude.toInt(),
+                                                longitude = binData.country.longitude.toInt()
+                                            )
+                                        }
+                                    },
+                                    onSiteClick = {
+                                        binData.bank.url?.let { context.openBrowser(link = it) }
+                                    }
+                                )
                             }
-                        )
+                        }
+                    } else {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(innerPadding)
+                                .padding(defaultDimensions.small)
+                        ) {
+                            Text(stringResource(id = R.string.text_history_not_exists))
+                        }
                     }
                 }
-            } else {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(innerPadding)
-                        .padding(defaultDimensions.small)
-                ) {
-                    Text(stringResource(id = R.string.text_history_not_exists))
-                }
+                else -> { /* Nothing */ }
             }
         }
     }

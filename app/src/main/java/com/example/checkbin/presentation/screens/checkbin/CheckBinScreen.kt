@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.checkbin.R
+import com.example.checkbin.presentation.BIN_LENGTH
 import com.example.checkbin.presentation.components.BinDataCard
 import com.example.checkbin.presentation.components.LoadingCircle
 import com.example.checkbin.presentation.model.LoadingState
@@ -47,7 +48,7 @@ import com.example.checkbin.presentation.utils.IntentUtils.openPhone
 fun CheckBinScreen(
     onHistoryClick: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: CheckBinScreenViewModel = hiltViewModel<CheckBinScreenViewModel>()
+    viewModel: CheckBinScreenViewModel = hiltViewModel<CheckBinScreenViewModel>(),
 ) {
     val uiState = viewModel.uiState.collectAsState().value
     val context = LocalContext.current
@@ -73,7 +74,13 @@ fun CheckBinScreen(
             )
         }
         Button(
-            onClick = { viewModel.getBinInfo() }
+            onClick = {
+                if (uiState.binInput.length == BIN_LENGTH) viewModel.getBinInfo() else Toast.makeText(
+                    context,
+                    context.getString(R.string.text_bin_error),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         ) {
             Text(text = stringResource(id = R.string.button_check_bin))
         }
@@ -110,7 +117,8 @@ fun CheckBinScreen(
                     viewModel.removeErrorState()
                 }
 
-                else -> { /* Nothing */ }
+                else -> { /* Nothing */
+                }
             }
         }
     }
@@ -130,7 +138,7 @@ fun CheckBinScreen(
 @Composable
 private fun HistoryFloatingButton(
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         contentAlignment = Alignment.BottomEnd,

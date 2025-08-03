@@ -1,11 +1,13 @@
 package com.example.checkbin.data.local.database
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.checkbin.data.local.dao.BinDataHistoryDao
 import com.example.checkbin.data.local.model.entity.BinDataHistoryEntity
+import java.util.concurrent.Executors
 
 /**
  * Базы данных Room для хранения истории запросов BIN-кодов.
@@ -38,7 +40,9 @@ abstract class BinDataHistoryDatabase : RoomDatabase() {
                     BinDataHistoryDatabase::class.java,
                     "bin_data_history"
                 )
-                    .fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration(false)
+                    .setJournalMode(JournalMode.TRUNCATE)
+                    .setQueryCallback({ sqlQuery, _ -> Log.d("RoomQuery", sqlQuery) }, Executors.newSingleThreadExecutor())
                     .build()
                     .also { INSTANCE = it }
             }

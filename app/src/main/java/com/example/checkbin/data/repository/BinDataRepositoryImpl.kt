@@ -1,10 +1,11 @@
 package com.example.checkbin.data.repository
 
+import com.example.checkbin.data.mapper.BinDataMapper.toDomain
 import com.example.checkbin.data.remote.api.BinDataApi
-import com.example.checkbin.data.remote.model.BinDataRequest
-import com.example.checkbin.data.remote.safeApiCall
+import com.example.checkbin.data.remote.model.safeApiCall
+import com.example.checkbin.domain.model.data.BinData as BinDataDomain
 import com.example.checkbin.domain.interfaces.repository.BinDataRepository
-import com.example.checkbin.domain.model.Result
+import com.example.checkbin.domain.model.result.ApiResult
 import javax.inject.Inject
 
 /**
@@ -19,11 +20,11 @@ class BinDataRepositoryImpl @Inject constructor(
     /**
      * Получает информацию о BIN-коде из API.
      * @param bin BIN-код для проверки
-     * @return Результат запроса [Result] с данными или ошибкой
+     * @return Результат запроса [ApiResult] с данными или ошибкой
      */
-    override suspend fun getBinInfo(bin: String): Result<BinDataRequest> {
+    override suspend fun getBinInfo(bin: String): ApiResult<BinDataDomain> {
         return safeApiCall {
-            binDataApi.getBinData(bin)
+            binDataApi.getBinData(bin).toDomain()
         }
     }
 }

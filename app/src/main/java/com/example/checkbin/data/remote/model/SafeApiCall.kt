@@ -1,6 +1,6 @@
-package com.example.checkbin.data.remote
+package com.example.checkbin.data.remote.model
 
-import com.example.checkbin.domain.model.Result
+import com.example.checkbin.domain.model.result.ApiResult
 import okio.IOException
 import retrofit2.HttpException
 import java.net.SocketTimeoutException
@@ -17,19 +17,19 @@ import java.net.SocketTimeoutException
  * - IOException
  * - Exception
  */
-suspend fun <T> safeApiCall(apiCall: suspend () -> T): Result<T> {
+suspend fun <T> safeApiCall(apiCall: suspend () -> T): ApiResult<T> {
     return try {
-        Result.Success(apiCall())
+        ApiResult.Success(apiCall())
     } catch (e: HttpException) {
-        Result.ServerError(
+        ApiResult.ServerError(
             message = e.toString(),
             errorCode = e.code()
         )
     } catch (e: SocketTimeoutException) {
-        Result.TimeoutError(message = e.toString())
+        ApiResult.TimeoutError(message = e.toString())
     } catch (e: IOException) {
-        Result.ConnectionError(message = e.toString())
+        ApiResult.ConnectionError(message = e.toString())
     } catch (e: Exception) {
-        Result.UnknownError(message = e.toString())
+        ApiResult.UnknownError(message = e.toString())
     }
 }

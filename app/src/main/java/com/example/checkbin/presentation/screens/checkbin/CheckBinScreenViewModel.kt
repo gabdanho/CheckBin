@@ -5,10 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.checkbin.domain.interfaces.repository.BinDataHistoryRepository
 import com.example.checkbin.domain.interfaces.repository.BinDataRepository
-import com.example.checkbin.domain.model.Result
-import com.example.checkbin.presentation.mapper.BinDataMapper.toBinData
+import com.example.checkbin.domain.model.result.ApiResult
+import com.example.checkbin.presentation.BIN_LENGTH
+import com.example.checkbin.presentation.mapper.BinDataMapper.toPresentation
 import com.example.checkbin.presentation.model.LoadingState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -38,12 +40,12 @@ class CheckBinScreenViewModel @Inject constructor(
      * Запускает асинхронный запрос информации по введённому BIN.
      */
     fun getBinInfo() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _uiState.update { it.copy(loadingState = LoadingState.Loading) }
 
             when (val resultData = binDataRepository.getBinInfo(_uiState.value.binInput)) {
-                is Result.Success -> {
-                    val mappedData = resultData.data.toBinData()
+                is ApiResult.Success -> {
+                    val mappedData = resultData.data.toPresentation()
                     _uiState.update {
                         it.copy(
                             binData = mappedData,
@@ -53,7 +55,7 @@ class CheckBinScreenViewModel @Inject constructor(
                     binDataHistoryRepository.insertBinDataInHistory(resultData.data)
                 }
 
-                is Result.ConnectionError -> _uiState.update {
+                is ApiResult.ConnectionError -> _uiState.update {
                     it.copy(
                         loadingState = LoadingState.Error(
                             message = resultData.message
@@ -61,7 +63,7 @@ class CheckBinScreenViewModel @Inject constructor(
                     )
                 }
 
-                is Result.ServerError -> _uiState.update {
+                is ApiResult.ServerError -> _uiState.update {
                     it.copy(
                         loadingState = LoadingState.Error(
                             message = resultData.message
@@ -69,7 +71,7 @@ class CheckBinScreenViewModel @Inject constructor(
                     )
                 }
 
-                is Result.TimeoutError -> _uiState.update {
+                is ApiResult.TimeoutError -> _uiState.update {
                     it.copy(
                         loadingState = LoadingState.Error(
                             message = resultData.message
@@ -77,7 +79,7 @@ class CheckBinScreenViewModel @Inject constructor(
                     )
                 }
 
-                is Result.UnknownError -> _uiState.update {
+                is ApiResult.UnknownError -> _uiState.update {
                     it.copy(
                         loadingState = LoadingState.Error(
                             message = resultData.message
@@ -94,7 +96,7 @@ class CheckBinScreenViewModel @Inject constructor(
      * @param value новое значение ввода.
      */
     fun updateBin(value: String) {
-        if (value.isDigitsOnly()) {
+        if (value.isDigitsOnly() && value.length <= BIN_LENGTH) {
             _uiState.update { it.copy(binInput = value) }
         }
     }

@@ -99,8 +99,8 @@ fun BinDataCard(
                     binData.bank.city ?: stringResource(id = R.string.text_nothing)
                 ),
                 style = MaterialTheme.typography.labelMedium,
-                color = Color.Blue,
-                textDecoration = TextDecoration.Underline,
+                color = if (binData.bank.name == null && binData.bank.city == null) Color.Black else Color.Blue,
+                textDecoration = if (binData.bank.name == null && binData.bank.city == null) TextDecoration.None else TextDecoration.Underline,
                 modifier = Modifier
                     .padding(bottom = defaultDimensions.small)
                     .clickable {
@@ -113,8 +113,8 @@ fun BinDataCard(
                     binData.bank.url ?: stringResource(id = R.string.text_nothing)
                 ),
                 style = MaterialTheme.typography.labelMedium,
-                color = Color.Blue,
-                textDecoration = TextDecoration.Underline,
+                color = if (binData.bank.url == null) Color.Black else Color.Blue,
+                textDecoration = if (binData.bank.url == null) TextDecoration.None else TextDecoration.Underline,
                 modifier = Modifier
                     .padding(bottom = defaultDimensions.small)
                     .clickable { if (binData.bank.url != null) onSiteClick() }
@@ -125,8 +125,8 @@ fun BinDataCard(
                     binData.bank.phone ?: stringResource(id = R.string.text_nothing)
                 ),
                 style = MaterialTheme.typography.labelMedium,
-                color = Color.Blue,
-                textDecoration = TextDecoration.Underline,
+                color = if (binData.bank.phone == null) Color.Black else Color.Blue,
+                textDecoration = if (binData.bank.phone == null) TextDecoration.None else TextDecoration.Underline,
                 modifier = Modifier.clickable {
                     if (binData.bank.phone != null) onPhoneClick()
                 }

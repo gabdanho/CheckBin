@@ -17,8 +17,10 @@ object IntentUtils {
      * @param number телефонный номер, на который будет совершен звонок.
      */
     fun Context.openPhone(number: String) {
-        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number"))
-        safeStartActivity(intent)
+        if (number.isNotBlank()) {
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number"))
+            safeStartActivity(intent)
+        }
     }
 
     /**
@@ -28,8 +30,10 @@ object IntentUtils {
      * @param longitude долгота точки на карте.
      */
     fun Context.openMap(latitude: Int, longitude: Int) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:$latitude,$longitude"))
-        safeStartActivity(intent)
+        if (latitude != 0 && longitude != 0) {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:$latitude,$longitude"))
+            safeStartActivity(intent)
+        }
     }
 
     /**
@@ -38,8 +42,10 @@ object IntentUtils {
      * @param link URL для открытия в браузере.
      */
     fun Context.openBrowser(link: String) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
-        safeStartActivity(intent)
+        if (link.isNotBlank()) {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+            safeStartActivity(intent)
+        }
     }
 
     /**

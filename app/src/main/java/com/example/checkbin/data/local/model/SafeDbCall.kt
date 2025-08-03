@@ -1,7 +1,6 @@
 package com.example.checkbin.data.local.model
 
-import android.content.ContentValues.TAG
-import android.util.Log
+import com.example.checkbin.domain.model.result.DbResult
 
 /**
  * Выполняет безопасный вызов операции с базой данных Room.
@@ -12,11 +11,10 @@ import android.util.Log
  * @param block Лямбда с suspend-функцией, выполняющей операцию чтения/записи в Room и возвращающей значение типа `T?`.
  * @return Результат выполнения [block] или `null`, если во время выполнения произошло исключение.
  */
-suspend inline fun <T : Any> safeRoomCall(block: suspend () -> T?): T? {
+suspend fun <T> safeDbCall(block: suspend () -> T): DbResult<T> {
     return try {
-        block()
+        DbResult.Success(block())
     } catch (e: Exception) {
-        Log.d(TAG, e.message.toString())
-        null
+        DbResult.Error(message = e.message ?: "Unknown error")
     }
 }

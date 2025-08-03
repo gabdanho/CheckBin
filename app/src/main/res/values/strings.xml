@@ -19,6 +19,7 @@
     <string name="text_yes">Yes</string>
     <string name="text_no">No</string>
     <string name="text_nothing">Nothing</string>
+    <string name="text_bin_error">"BIN must be 6 digits"</string>
 
     <string name="button_check_bin">Check BIN</string>
 

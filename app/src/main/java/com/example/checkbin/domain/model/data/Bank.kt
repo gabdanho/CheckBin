@@ -1,4 +1,4 @@
-package com.example.checkbin.data.remote.model
+package com.example.checkbin.domain.model.data
 
 /**
  * Модель данных с информацией о банке-эмитенте карты.
@@ -8,9 +8,10 @@ package com.example.checkbin.data.remote.model
  * @property phone Контактный телефон банка
  * @property city Город расположения банка-эмитента
  */
-data class BankRequest(
-    val name: String? = null,
-    val url: String? = null,
-    val phone: String? = null,
-    val city: String? = null
+data class Bank(
+    val name: String? = "",
+    val url: String? = "",
+    val phone: String? = "",
+    val city: String? = ""
 )
+

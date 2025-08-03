@@ -1,12 +1,13 @@
 package com.example.checkbin.data.repository
 
 import com.example.checkbin.data.local.dao.BinDataHistoryDao
-import com.example.checkbin.data.local.mapper.BinDataHistoryEntityMapper.toBinDataHistoryEntity
-import com.example.checkbin.data.local.model.safeRoomCall
-import com.example.checkbin.data.remote.model.BinDataRequest
+import com.example.checkbin.data.local.model.safeDbCall
+import com.example.checkbin.data.mapper.BinDataHistoryEntityMapper.toBinDataHistoryEntity
+import com.example.checkbin.data.mapper.BinDataHistoryEntityMapper.toDomain
+import com.example.checkbin.domain.model.data.BinData as BinDataDomain
 import com.example.checkbin.domain.interfaces.repository.BinDataHistoryRepository
-import com.example.checkbin.presentation.mapper.BinDataMapper.toBinData
-import com.example.checkbin.presentation.model.BinData
+import com.example.checkbin.domain.model.data.BinData
+import com.example.checkbin.domain.model.result.DbResult
 import javax.inject.Inject
 
 /**
@@ -20,21 +21,21 @@ class BinDataHistoryRepositoryImpl @Inject constructor(
 
     /**
      * Сохраняет запрос BIN-данных в историю.
-     * @param binDataRequest Данные для сохранения
+     * @param binData Данные для сохранения
      */
-    override suspend fun insertBinDataInHistory(binDataRequest: BinDataRequest) {
-        safeRoomCall {
-            binDataHistoryDao.insertBinDataInHistory(binDataRequest.toBinDataHistoryEntity())
+    override suspend fun insertBinDataInHistory(binData: BinDataDomain) {
+        safeDbCall {
+            binDataHistoryDao.insertBinDataInHistory(binData.toBinDataHistoryEntity())
         }
     }
 
     /**
      * Получает историю запросов BIN-данных.
-     * @return Список [BinDataRequest]
+     * @return Список [BinDataDomain]
      */
-    override suspend fun getBinDataHistory(): List<BinData>? {
-        return safeRoomCall {
-            binDataHistoryDao.getBinDataHistory()?.map { it.toBinData() }
+    override suspend fun getBinDataHistory(): DbResult<List<BinData>> {
+        return safeDbCall {
+            binDataHistoryDao.getBinDataHistory()?.map { it.toDomain() } ?: emptyList()
         }
     }
 }

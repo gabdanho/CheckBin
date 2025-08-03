@@ -1,4 +1,4 @@
-package com.example.checkbin.data.remote.model
+package com.example.checkbin.domain.model.data
 
 /**
  * Модель данных с информацией о номере банковской карты.
@@ -7,7 +7,7 @@ package com.example.checkbin.data.remote.model
  * @property length Длина номера карты (количество цифр)
  * @property luhn Результат проверки номера по алгоритму Луна
  */
-data class NumberInfoRequest(
-    val length: Int? = null,
+data class NumberInfo(
+    val length: String? = "",
     val luhn: Boolean? = null
 )
