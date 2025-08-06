@@ -19,6 +19,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.checkbin.R
@@ -69,7 +70,9 @@ fun CheckBinScreen(
             TextField(
                 value = uiState.binInput,
                 onValueChange = { viewModel.updateBin(it) },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag(tag = "binInput")
             )
         }
         Button(
@@ -108,7 +111,7 @@ fun CheckBinScreen(
 
                 is LoadingState.Error -> {
                     Toast.makeText(context, loadingState.message, Toast.LENGTH_LONG).show()
-                    viewModel.removeErrorState()
+                    viewModel.resetLoadingState()
                 }
 
                 else -> { /* Nothing */
@@ -139,6 +142,7 @@ private fun HistoryFloatingButton(
         modifier = modifier
             .fillMaxSize()
             .padding(defaultDimensions.medium)
+            .testTag(tag = "historyFAB")
     ) {
         FloatingActionButton(onClick = { onClick() }) {
             Icon(

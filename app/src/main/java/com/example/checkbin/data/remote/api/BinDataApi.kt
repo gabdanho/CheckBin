@@ -1,6 +1,6 @@
 package com.example.checkbin.data.remote.api
 
-import com.example.checkbin.data.remote.model.BinData
+import com.example.checkbin.data.remote.model.bin.BinData
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path

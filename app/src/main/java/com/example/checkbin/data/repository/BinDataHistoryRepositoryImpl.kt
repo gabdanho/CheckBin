@@ -31,9 +31,9 @@ class BinDataHistoryRepositoryImpl @Inject constructor(
 
     /**
      * Получает историю запросов BIN-данных.
-     * @return Список [BinDataDomain]
+     * @return Список [BinData]
      */
-    override suspend fun getBinDataHistory(): DbResult<List<BinData>> {
+    override suspend fun getBinDataHistory(): DbResult<List<BinDataDomain>> {
         return safeDbCall {
             binDataHistoryDao.getBinDataHistory()?.map { it.toDomain() } ?: emptyList()
         }

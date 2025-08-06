@@ -1,4 +1,4 @@
-package com.example.checkbin.data.remote.model
+package com.example.checkbin.data.remote.model.bin
 
 /**
  * Модель данных с информацией о банке-эмитенте карты.

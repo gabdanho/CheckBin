@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.example.checkbin.presentation.screens.checkbin.CheckBinScreen
-import com.example.checkbin.presentation.screens.history.HistoryBinInfo
+import com.example.checkbin.presentation.screens.history.HistoryBinDataScreen
 
 /**
  * Навигационный граф приложения, определяющий маршруты между экранами.
@@ -36,7 +36,7 @@ fun BinNavGraph(
         }
 
         composable(route = NavigationRoutes.HISTORY.name) {
-            HistoryBinInfo(
+            HistoryBinDataScreen(
                 onBackClick = { navController.popBackStack() }
             )
         }

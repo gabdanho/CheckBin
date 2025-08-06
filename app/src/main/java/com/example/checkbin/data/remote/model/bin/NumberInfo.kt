@@ -1,4 +1,4 @@
-package com.example.checkbin.presentation.model
+package com.example.checkbin.data.remote.model.bin
 
 /**
  * Модель данных с информацией о номере банковской карты.
@@ -8,6 +8,6 @@ package com.example.checkbin.presentation.model
  * @property luhn Результат проверки номера по алгоритму Луна
  */
 data class NumberInfo(
-    val length: String? = "",
+    val length: Int? = null,
     val luhn: Boolean? = null
 )

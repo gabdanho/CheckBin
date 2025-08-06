@@ -53,7 +53,7 @@ object BinDataHistoryEntityMapper {
     fun BinDataHistoryEntity.toDomain(): BinDataDomain {
         return BinDataDomain(
             number = NumberInfoDomain(
-                length = this.number?.length.toString(),
+                length = if (this.number?.length != null) this.number.length.toString() else null,
                 luhn = this.number?.luhn
             ),
             scheme = this.scheme,
@@ -66,8 +66,8 @@ object BinDataHistoryEntityMapper {
                 name = this.country?.name,
                 emoji = this.country?.emoji,
                 currency = this.country?.currency,
-                latitude = this.country?.latitude.toString(),
-                longitude = this.country?.longitude.toString(),
+                latitude = if (this.country?.latitude != null) this.country.latitude.toString() else null,
+                longitude = if (this.country?.longitude != null) this.country.longitude.toString() else null,
             ),
             bank = BankDomain(
                 name = this.bank?.name,

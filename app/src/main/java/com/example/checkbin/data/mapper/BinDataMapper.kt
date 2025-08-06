@@ -1,6 +1,6 @@
 package com.example.checkbin.data.mapper
 
-import com.example.checkbin.data.remote.model.BinData
+import com.example.checkbin.data.remote.model.bin.BinData
 import com.example.checkbin.domain.model.data.NumberInfo as NumberInfoDomain
 import com.example.checkbin.domain.model.data.Country as CountryDomain
 import com.example.checkbin.domain.model.data.Bank as BankDomain
@@ -9,10 +9,10 @@ import com.example.checkbin.domain.model.data.BinData as BinDataDomain
 object BinDataMapper {
 
     /**
-     * Преобразует [BinData] в объект [BinDataDomain].
+     * Преобразует [BinData] в объект [BinData].
      *
      * @receiver объект [BinData] для преобразования.
-     * @return объект [BinDataDomain].
+     * @return объект [BinData].
      */
     fun BinData.toDomain(): BinDataDomain {
         return BinDataDomain(

@@ -13,6 +13,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -26,7 +28,7 @@ const val BASE_URL = "https://lookup.binlist.net"
  */
 @Module
 @InstallIn(SingletonComponent::class)
-object Module {
+object AppModule {
 
     // Binlist server start
 
@@ -93,4 +95,9 @@ object Module {
     fun provideBinDataHistoryRepository(binDataHistoryDao: BinDataHistoryDao): BinDataHistoryRepository {
         return BinDataHistoryRepositoryImpl(binDataHistoryDao)
     }
+
+    @Singleton
+    @Provides
+    @IoDispatcher
+    fun provideDispatcher(): CoroutineDispatcher = Dispatchers.IO
 }

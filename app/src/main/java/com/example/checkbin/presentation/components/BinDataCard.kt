@@ -13,11 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import com.example.checkbin.R
-import com.example.checkbin.presentation.model.BinData
+import com.example.checkbin.presentation.model.bin.BinData
 import com.example.checkbin.presentation.theme.defaultDimensions
 import com.example.checkbin.presentation.utils.StringResUtils.booleanToStringRes
 
@@ -40,7 +41,11 @@ fun BinDataCard(
     onSiteClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Card(modifier = modifier.padding(defaultDimensions.small)) {
+    Card(
+        modifier = modifier
+            .padding(defaultDimensions.small)
+            .testTag(tag = "binDataCard")
+    ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier

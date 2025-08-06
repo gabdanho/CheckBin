@@ -2,12 +2,13 @@ package com.example.checkbin.presentation.screens.history
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.checkbin.di.IoDispatcher
 import com.example.checkbin.domain.interfaces.repository.BinDataHistoryRepository
 import com.example.checkbin.domain.model.result.DbResult
 import com.example.checkbin.presentation.mapper.BinDataMapper.toPresentation
 import com.example.checkbin.presentation.model.LoadingState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,6 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HistoryBinDataScreenViewModel @Inject constructor(
     private val binDataHistoryRepository: BinDataHistoryRepository,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HistoryBinDataScreenUiState())
@@ -39,7 +41,7 @@ class HistoryBinDataScreenViewModel @Inject constructor(
      * Загружает историю данных BIN из репозитория и обновляет состояние UI.
      */
     private fun getHistoryInfo() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             _uiState.update { it.copy(loadingState = LoadingState.Loading) }
 
             when (val resultData = binDataHistoryRepository.getBinDataHistory()) {

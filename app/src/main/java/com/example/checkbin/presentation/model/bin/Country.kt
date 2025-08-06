@@ -1,4 +1,4 @@
-package com.example.checkbin.data.remote.model
+package com.example.checkbin.presentation.model.bin
 
 /**
  * Модель данных страны банка-эмитента карты.
@@ -13,11 +13,11 @@ package com.example.checkbin.data.remote.model
  * @property longitude Географическая долгота столицы
  */
 data class Country(
-    val numeric: String? = null,
-    val alpha2: String? = null,
-    val name: String? = null,
-    val emoji: String? = null,
-    val currency: String? = null,
-    val latitude: Int? = null,
-    val longitude: Int? = null
+    val numeric: String? = "",
+    val alpha2: String? = "",
+    val name: String? = "",
+    val emoji: String? = "",
+    val currency: String? = "",
+    val latitude: String? = "",
+    val longitude: String? = ""
 )

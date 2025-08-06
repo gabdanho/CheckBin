@@ -1,9 +1,9 @@
 package com.example.checkbin.presentation.mapper
 
-import com.example.checkbin.presentation.model.Bank
-import com.example.checkbin.presentation.model.BinData
-import com.example.checkbin.presentation.model.Country
-import com.example.checkbin.presentation.model.NumberInfo
+import com.example.checkbin.presentation.model.bin.Bank
+import com.example.checkbin.presentation.model.bin.BinData
+import com.example.checkbin.presentation.model.bin.Country
+import com.example.checkbin.presentation.model.bin.NumberInfo
 import com.example.checkbin.domain.model.data.BinData as BinDataDomain
 
 /**

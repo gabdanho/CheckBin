@@ -1,4 +1,4 @@
-package com.example.checkbin.presentation.model
+package com.example.checkbin.presentation.model.bin
 
 /**
  * Модель данных с информацией о банке-эмитенте карты.

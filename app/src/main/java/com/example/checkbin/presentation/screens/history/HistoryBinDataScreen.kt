@@ -37,7 +37,7 @@ import com.example.checkbin.presentation.utils.IntentUtils.openPhone
  * @param viewModel ViewModel, управляющий состоянием истории (по умолчанию внедряется через Hilt).
  */
 @Composable
-fun HistoryBinInfo(
+fun HistoryBinDataScreen(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HistoryBinDataScreenViewModel = hiltViewModel<HistoryBinDataScreenViewModel>()

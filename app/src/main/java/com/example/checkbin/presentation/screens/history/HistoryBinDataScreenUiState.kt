@@ -1,6 +1,6 @@
 package com.example.checkbin.presentation.screens.history
 
-import com.example.checkbin.presentation.model.BinData
+import com.example.checkbin.presentation.model.bin.BinData
 import com.example.checkbin.presentation.model.LoadingState
 
 /**

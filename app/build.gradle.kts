@@ -17,7 +17,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.checkbin.HiltTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -49,46 +49,44 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
             excludes += "META-INF/gradle/incremental.annotation.processors"
+            excludes += "META-INF/LICENSE.md"
+            excludes += "META-INF/LICENSE-notice.md"
         }
     }
 }
 
 dependencies {
-    // Room
+
     implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    // KSP
     ksp(libs.androidx.room.compiler)
-    // Navigation
-    implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
-    // Retrofit
     implementation(libs.retrofit)
-    // GSON Converter
     implementation(libs.converter.gson)
-    // Hilt
     implementation(libs.google.dagger.hilt.android)
     implementation(libs.google.dagger.hilt.navigation.compose)
     ksp(libs.google.dagger.hilt.android.compiler)
-
-    // Lifecycle ViewModel Compose
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-    // Logging Interceptor
     implementation(libs.logging.interceptor)
-
-    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutine.test)
+    testImplementation(libs.io.mockk)
+
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.android.test.runner)
+    androidTestImplementation(libs.android.test.core)
+    androidTestImplementation(libs.hilt.testing)
+    androidTestImplementation(libs.androidx.ui.test.manifest)
+    androidTestImplementation(libs.mockk.android)
+
+    kspAndroidTest(libs.google.dagger.hilt.android.compiler)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }

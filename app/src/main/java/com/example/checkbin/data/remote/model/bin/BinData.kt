@@ -1,4 +1,4 @@
-package com.example.checkbin.presentation.model
+package com.example.checkbin.data.remote.model.bin
 
 /**
  * Основная модель данных ответа API для информации о BIN-коде карты.
@@ -13,11 +13,11 @@ package com.example.checkbin.presentation.model
  * @property bank Информация о банке-эмитенте карты
  */
 data class BinData(
-    val number: NumberInfo = NumberInfo(),
-    val scheme: String? = "",
-    val type: String? = "",
-    val brand: String? = "",
+    val number: NumberInfo? = null,
+    val scheme: String? = null,
+    val type: String? = null,
+    val brand: String? = null,
     val prepaid: Boolean? = null,
-    val country: Country = Country(),
-    val bank: Bank = Bank()
+    val country: Country? = null,
+    val bank: Bank? = null
 )
