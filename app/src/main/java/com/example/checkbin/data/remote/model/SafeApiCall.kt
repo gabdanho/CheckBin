@@ -21,7 +21,7 @@ import java.net.SocketTimeoutException
  */
 suspend fun <T> safeApiCall(
     timeoutMillis: Long = 10000,
-    apiCall: suspend () -> T
+    apiCall: suspend () -> T,
 ): ApiResult<T> {
     return try {
         val result = withTimeout(timeoutMillis) {
@@ -33,13 +33,14 @@ suspend fun <T> safeApiCall(
             message = e.toString(),
             errorCode = e.code()
         )
+
+    } catch (e: TimeoutCancellationException) {
+        ApiResult.TimeoutError(message = "The server response time has been exceeded")
     } catch (e: SocketTimeoutException) {
         ApiResult.TimeoutError(message = e.toString())
     } catch (e: IOException) {
         ApiResult.ConnectionError(message = e.toString())
     } catch (e: Exception) {
         ApiResult.UnknownError(message = e.toString())
-    } catch (e: TimeoutCancellationException) {
-        ApiResult.TimeoutError(message = "The server response time has been exceeded")
     }
 }
