@@ -2,9 +2,9 @@ package com.example.checkbin.presentation.utils
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.widget.Toast
 import com.example.checkbin.R
+import androidx.core.net.toUri
 
 /**
  * Утилиты для упрощённого создания и запуска интентов из контекста.
@@ -18,7 +18,7 @@ object IntentUtils {
      */
     fun Context.openPhone(number: String) {
         if (number.isNotBlank()) {
-            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number"))
+            val intent = Intent(Intent.ACTION_DIAL, "tel:$number".toUri())
             safeStartActivity(intent)
         }
     }
@@ -31,7 +31,7 @@ object IntentUtils {
      */
     fun Context.openMap(latitude: Int, longitude: Int) {
         if (latitude != 0 && longitude != 0) {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:$latitude,$longitude"))
+            val intent = Intent(Intent.ACTION_VIEW, "geo:$latitude,$longitude".toUri())
             safeStartActivity(intent)
         }
     }
@@ -43,7 +43,7 @@ object IntentUtils {
      */
     fun Context.openBrowser(link: String) {
         if (link.isNotBlank()) {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+            val intent = Intent(Intent.ACTION_VIEW, link.toUri())
             safeStartActivity(intent)
         }
     }

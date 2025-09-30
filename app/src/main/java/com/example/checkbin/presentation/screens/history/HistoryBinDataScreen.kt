@@ -62,11 +62,13 @@ fun HistoryBinDataScreen(
                                     binData = binData,
                                     onPhoneClick = { binData.bank.phone?.let { context.openPhone(number = it) } },
                                     onCityClick = {
-                                        if (binData.country.latitude != null && binData.country.longitude != null) {
-                                            context.openMap(
-                                                latitude = binData.country.latitude.toInt(),
-                                                longitude = binData.country.longitude.toInt()
-                                            )
+                                        binData.country.latitude?.toIntOrNull()?.let { latitude ->
+                                            binData.country.longitude?.toIntOrNull()?.let { longitude ->
+                                                context.openMap(
+                                                    latitude = latitude,
+                                                    longitude = longitude
+                                                )
+                                            }
                                         }
                                     },
                                     onSiteClick = {

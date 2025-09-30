@@ -109,7 +109,7 @@ fun BinDataCard(
                 modifier = Modifier
                     .padding(bottom = defaultDimensions.small)
                     .clickable {
-                        if (binData.country.latitude != null && binData.country.longitude != null) onCityClick()
+                        if (!binData.country.latitude.isNullOrBlank() && !binData.country.longitude.isNullOrBlank()) onCityClick()
                     }
             )
             Text(
