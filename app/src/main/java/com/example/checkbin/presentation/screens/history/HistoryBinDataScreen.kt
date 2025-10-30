@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.checkbin.R
 import com.example.checkbin.presentation.components.BinDataCard
 import com.example.checkbin.presentation.model.LoadingState
@@ -25,6 +24,7 @@ import com.example.checkbin.presentation.theme.defaultDimensions
 import com.example.checkbin.presentation.utils.IntentUtils.openBrowser
 import com.example.checkbin.presentation.utils.IntentUtils.openMap
 import com.example.checkbin.presentation.utils.IntentUtils.openPhone
+import org.koin.androidx.compose.koinViewModel
 
 /**
  * Экран отображения истории проверок BIN.
@@ -40,7 +40,7 @@ import com.example.checkbin.presentation.utils.IntentUtils.openPhone
 fun HistoryBinDataScreen(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: HistoryBinDataScreenViewModel = hiltViewModel<HistoryBinDataScreenViewModel>()
+    viewModel: HistoryBinDataScreenViewModel = koinViewModel()
 ) {
     val uiState = viewModel.uiState.collectAsState().value
     val context = LocalContext.current

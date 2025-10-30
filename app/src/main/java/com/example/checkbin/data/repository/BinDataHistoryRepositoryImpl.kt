@@ -8,14 +8,13 @@ import com.example.checkbin.domain.model.data.BinData as BinDataDomain
 import com.example.checkbin.domain.interfaces.repository.BinDataHistoryRepository
 import com.example.checkbin.domain.model.data.BinData
 import com.example.checkbin.domain.model.result.DbResult
-import javax.inject.Inject
 
 /**
  * Реализация репозитория для работы с историей запросов BIN-данных.
  *
  * @param binDataHistoryDao DAO для доступа к данным истории
  */
-class BinDataHistoryRepositoryImpl @Inject constructor(
+class BinDataHistoryRepositoryImpl(
     private val binDataHistoryDao: BinDataHistoryDao
 ): BinDataHistoryRepository {
 

@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.checkbin.R
 import com.example.checkbin.presentation.components.BinDataCard
 import com.example.checkbin.presentation.components.LoadingCircle
@@ -30,6 +29,7 @@ import com.example.checkbin.presentation.theme.defaultDimensions
 import com.example.checkbin.presentation.utils.IntentUtils.openBrowser
 import com.example.checkbin.presentation.utils.IntentUtils.openMap
 import com.example.checkbin.presentation.utils.IntentUtils.openPhone
+import org.koin.androidx.compose.koinViewModel
 
 /**
  * Экран для ввода и проверки BIN (Bank Identification Number).
@@ -48,7 +48,7 @@ import com.example.checkbin.presentation.utils.IntentUtils.openPhone
 fun CheckBinScreen(
     onHistoryClick: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: CheckBinScreenViewModel = hiltViewModel<CheckBinScreenViewModel>(),
+    viewModel: CheckBinScreenViewModel = koinViewModel(),
 ) {
     val uiState = viewModel.uiState.collectAsState().value
     val context = LocalContext.current

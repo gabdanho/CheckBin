@@ -6,14 +6,13 @@ import com.example.checkbin.data.remote.model.safeApiCall
 import com.example.checkbin.domain.model.data.BinData as BinDataDomain
 import com.example.checkbin.domain.interfaces.repository.BinDataRepository
 import com.example.checkbin.domain.model.result.ApiResult
-import javax.inject.Inject
 
 /**
  * Реализация репозитория для работы с API BIN-данных.
  *
  * @param binDataApi API-клиент для запросов BIN-данных
  */
-class BinDataRepositoryImpl @Inject constructor(
+class BinDataRepositoryImpl(
     private val binDataApi: BinDataApi
 ) : BinDataRepository {
 

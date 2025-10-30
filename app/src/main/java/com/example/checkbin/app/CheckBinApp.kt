@@ -1,7 +1,17 @@
 package com.example.checkbin.app
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.example.checkbin.di.appModule
+import com.example.checkbin.di.viewModelModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
-@HiltAndroidApp
-class CheckBinApp: Application()
+class CheckBinApp: Application() {
+    override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            androidContext(this@CheckBinApp)
+            modules(appModule, viewModelModule)
+        }
+    }
+}

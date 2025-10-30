@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.google.devtools.ksp)
     alias(libs.plugins.compose.compiler)
 }
@@ -62,9 +61,6 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
-    implementation(libs.google.dagger.hilt.android)
-    implementation(libs.google.dagger.hilt.navigation.compose)
-    ksp(libs.google.dagger.hilt.android.compiler)
     implementation(libs.logging.interceptor)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -72,6 +68,7 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.material3)
+    implementation(libs.koin)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutine.test)
@@ -82,11 +79,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     androidTestImplementation(libs.android.test.runner)
     androidTestImplementation(libs.android.test.core)
-    androidTestImplementation(libs.hilt.testing)
     androidTestImplementation(libs.androidx.ui.test.manifest)
     androidTestImplementation(libs.mockk.android)
 
-    kspAndroidTest(libs.google.dagger.hilt.android.compiler)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }

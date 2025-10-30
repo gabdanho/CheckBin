@@ -2,21 +2,18 @@ package com.example.checkbin.presentation.screens.checkbin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.checkbin.di.IoDispatcher
 import com.example.checkbin.domain.interfaces.repository.BinDataHistoryRepository
 import com.example.checkbin.domain.interfaces.repository.BinDataRepository
 import com.example.checkbin.domain.model.result.ApiResult
 import com.example.checkbin.presentation.BIN_LENGTH
 import com.example.checkbin.presentation.mapper.BinDataMapper.toPresentation
 import com.example.checkbin.presentation.model.LoadingState
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * ViewModel для экрана проверки BIN.
@@ -27,11 +24,10 @@ import javax.inject.Inject
  * @property binDataRepository репозиторий для получения данных о BIN.
  * @property binDataHistoryRepository репозиторий для сохранения истории запросов BIN.
  */
-@HiltViewModel
-class CheckBinScreenViewModel @Inject constructor(
+class CheckBinScreenViewModel(
     private val binDataRepository: BinDataRepository,
     private val binDataHistoryRepository: BinDataHistoryRepository,
-    @IoDispatcher private val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(CheckBinScreenUiState())
