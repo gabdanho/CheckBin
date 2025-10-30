@@ -7,44 +7,33 @@ import com.example.checkbin.data.repository.BinDataHistoryRepositoryImpl
 import com.example.checkbin.data.repository.BinDataRepositoryImpl
 import com.example.checkbin.domain.interfaces.repository.BinDataHistoryRepository
 import com.example.checkbin.domain.interfaces.repository.BinDataRepository
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.serialization.gson.gson
 import kotlinx.coroutines.Dispatchers
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-
-const val BASE_URL = "https://lookup.binlist.net"
 
 val appModule = module {
 
-    // HttpLoggingInterceptor
+    // Ktor HttpClient
     single {
-        HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
+        HttpClient(OkHttp) {
+            install(ContentNegotiation) {
+                gson()
+            }
+            install(Logging) {
+                level = LogLevel.BODY
+            }
         }
-    }
-
-    // OkHttpClient
-    single {
-        OkHttpClient.Builder()
-            .addInterceptor(get<HttpLoggingInterceptor>())
-            .build()
-    }
-
-    // Retrofit
-    single {
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(get<OkHttpClient>())
-            .build()
     }
 
     // BinDataApi
     single {
-        get<Retrofit>().create(BinDataApi::class.java)
+        BinDataApi(get())
     }
 
     // BinDataHistoryDatabase

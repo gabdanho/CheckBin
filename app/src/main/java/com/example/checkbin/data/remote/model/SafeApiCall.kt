@@ -4,7 +4,6 @@ import com.example.checkbin.domain.model.result.ApiResult
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withTimeout
 import okio.IOException
-import retrofit2.HttpException
 import java.net.SocketTimeoutException
 
 /**
@@ -14,7 +13,6 @@ import java.net.SocketTimeoutException
  * @return Result с данными или ошибкой
  *
  * Обрабатывает:
- * - HttpException
  * - SocketTimeoutException
  * - IOException
  * - Exception
@@ -28,13 +26,7 @@ suspend fun <T> safeApiCall(
             apiCall()
         }
         ApiResult.Success(result)
-    } catch (e: HttpException) {
-        ApiResult.ServerError(
-            message = e.toString(),
-            errorCode = e.code()
-        )
-
-    } catch (e: TimeoutCancellationException) {
+    } catch (_: TimeoutCancellationException) {
         ApiResult.TimeoutError(message = "The server response time has been exceeded")
     } catch (e: SocketTimeoutException) {
         ApiResult.TimeoutError(message = e.toString())
